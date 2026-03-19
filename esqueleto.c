@@ -7,7 +7,7 @@
 #include <stdint.h>
 
 uint8_t mem[256] = {0};
-uint8_t reg[4] = {0};
+uint8_t reg[32] = {0};
 uint8_t pc = 0, zf = 0, running = 1;
 int ciclo = 0;
 
@@ -34,14 +34,28 @@ void decode_execute(uint8_t op, uint8_t a, uint8_t b) {
 void trace(uint8_t op, uint8_t a, uint8_t b) {
     const char *nomes[] = {"","LOAD","STORE","ADD",
         "SUB","MOV","CMP","JMP","JZ","JNZ","HALT"};
-    printf("Ciclo %d: %-5s %d,%d | R0=%3d R1=%3d"
-           " R2=%3d R3=%3d | PC=%3d ZF=%d\n",
+    printf("Ciclo %d: %-5s %d,%d | R16=%3d R17=%3d"
+           " R18=%3d R19=%3d R20=%3d R21=%3d R22=%3d R23=%3d| PC=%3d ZF=%d\n",
            ciclo, nomes[op], a, b,
-           reg[0], reg[1], reg[2], reg[3], pc, zf);
+           reg[16], reg[17], reg[18], reg[19], reg[20],
+           reg[21], reg[22], reg[23], pc, zf);
+}
+
+void max_array() {
+    mem[0x00] = 0x05; mem[0x01] = 0x10; mem[0x02] = 0x0C;
+    mem[0x03] = 0x05; mem[0x04] = 0x11; mem[0x05] = 0x2D;
+    mem[0x06] = 0x05; mem[0x07] = 0x12; mem[0x08] = 0x07;
+    mem[0x09] = 0x05; mem[0x0A] = 0x13; mem[0x0B] = 0x59;
+    mem[0x0C] = 0x05; mem[0x0D] = 0x14; mem[0x0E] = 0x17;
+    mem[0x0F] = 0x05; mem[0x10] = 0x15; mem[0x11] = 0x38;
+    mem[0x12] = 0x05; mem[0x13] = 0x16; mem[0x14] = 0x03;
+    mem[0x15] = 0x05; mem[0x16] = 0x17; mem[0x17] = 0x43;
+    mem[0x18] = 0x0A; mem[0x19] = 0x00; mem[0x1A] = 0x00;
 }
 
 int main() {
-    // TODO: carregar programa e dados na mem[]
+    max_array();
+
     while (running && pc < 256) {
         uint8_t op, a, b;
         ciclo++;
