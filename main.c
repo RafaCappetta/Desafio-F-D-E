@@ -1,8 +1,3 @@
-/**
- * #################################
- * # Esqueleto do processador em C #
- * #################################
-*/
 #include <stdio.h>
 #include <stdint.h>
 
