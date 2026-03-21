@@ -127,6 +127,6 @@ int main() {
         trace(op, a, b);
     }
 
-    printf("Maior valor econtrado: %d", mem[0x20]);
+    printf("Maior valor encontrado: %d", mem[0x20]);
     return 0;
 }
